@@ -65,12 +65,23 @@ with open(csvpath, newline='') as csvfile:
     print("Greatest Decrease in Profits:", max_decr_mon, max_decr)
   
 # create text for output 
-output = ["Finnancial Analysis", "--------------------------", "Total months:" , count]
 
-'''
-output_path = os.path.join("..", "Pybank", "new.txt")
+count = str(count)
+net_profit = str(net_profit)
+avg_change = str(avg_change)
+max_incr_mon = str(max_incr_mon)
+max_incr = str(max_incr)
+max_decr = str(max_decr)
+max_decr_mon = str(max_decr_mon)
 
-with open(output_path, 'w', newline='') as txtfile:
+text_file = open("analysis.txt", "w")
 
-    output_path.writelines(output)
-'''
+text_file.write("Finnancial Analysis\n")
+text_file.write("--------------------------\n")
+text_file.write("Total months: " + count + "\n")
+text_file.write("Total: " + "$" + net_profit + "\n")
+text_file.write("Average Change: " + "$" +avg_change + "\n") 
+text_file.write("Greatest Increase in Profits:" + max_incr_mon + " " + "$" + max_incr + "\n" )
+text_file.write("Greatest Decrease in Profits:" + max_decr_mon + " " + "$" + max_decr + "\n")
+
+text_file.close()

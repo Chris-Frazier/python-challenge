@@ -80,3 +80,31 @@ with open(csvpath, newline='') as csvfile:
     print("--------------------------")
     print("Winner:", winner)
     print("--------------------------")
+
+    # make a text file with the results
+
+    vote_count = str(vote_count)
+    Khan_percent = str(Khan_percent)
+    Khan_votes = str(Khan_votes)
+    Correy_percent = str(Correy_percent)
+    Correy_votes = str(Correy_votes)
+    Li_percent = str(Li_percent)
+    Li_votes = str(Li_votes)
+    OTooley_percent = str(OTooley_percent)
+    OTooley_votes = str(OTooley_votes)
+
+    text_file = open("resutls.txt", "w")
+
+    text_file.write("Election Results \n")
+    text_file.write("-------------------------- \n")    
+    text_file.write("Total Votes: " + vote_count + "\n")
+    text_file.write("-------------------------- \n")
+    text_file.write("Khan: "+ Khan_percent +"% " + Khan_votes + "\n") 
+    text_file.write("Correy: "+ Correy_percent +"% "+ Correy_votes + "\n")
+    text_file.write("Li: " + Li_percent +"% "+ Li_votes + "\n")
+    text_file.write("O'Tooley: "+ OTooley_percent +"% "+ OTooley_votes + "\n")
+    text_file.write("--------------------------\n")
+    text_file.write("Winner: "+ winner+ "\n")
+    text_file.write("--------------------------\n")
+
+    text_file.close()
