@@ -1,7 +1,20 @@
-import os 
-import csv
+import os
 
-csvpath = os.path.join('..', "PyPoll", "election_data.csv")
+import csv
+    
+csvpath = os.path.join('..', "PyBank", "budget_data.csv")
+
+# set variable for calculations
+count = 0
+net_profit = 0
+val1 = 0
+val2 = 0
+diff = 0
+diff_total = 0
+max_incr = 0
+max_incr_mon = ''
+max_decr = 0
+max_decr_mon = ''
 
 with open(csvpath, newline='') as csvfile:
 
@@ -11,72 +24,53 @@ with open(csvpath, newline='') as csvfile:
     # Read the header row first 
     csv_header = next(csvreader)
 
-    # create variable for calculations
-    vote_count = 0
-    Khan_votes = 0
-    Correy_votes = 0
-    Li_votes = 0
-    OTooley_votes = 0
-    winner = ''
-    winner_votes = 0
-
     # Read each row of data after the header
     for row in csvreader:
+    
+    # count the number of months
+        count +=1
+    # calculate net profits
+        row[1] = int(row[1])
+        net_profit += row[1]
 
-        # count the  total votes 
-        vote_count += 1
+    # cacluate the average of the changes in profits
+        if diff == 0:
+            val1 = row[1]
+            diff = val1 - val2
+            val2 = val1
+        else:
+            val1 = row[1]
+            diff = val1 - val2
+            diff_total += diff
+            val2 = val1
+    
+    # calculate the greatest increase
+        if row[1] > max_incr:
+            max_incr = diff
+            max_incr_mon = row[0]
 
-        # calculate the vote for each candidate
-        if row[2] == "Khan":
-            Khan_votes += 1
-        elif row[2] == "Correy":
-            Correy_votes += 1
-        elif row[2] == "Li":
-            Li_votes += 1
-        elif row[2] == "O'Tooley":
-            OTooley_votes += 1
+    # calculate the greatest decrease
+        if row[1] < max_decr:
+            max_decr = diff
+            max_decr_mon = row[0]
 
-    # Calculate the winner
-        if Khan_votes > winner_votes:
-            winner = "Khan"
-            winner_votes = Khan_votes
-        elif Correy_votes > winner_votes:
-            winner = "Correy"
-            winner_votes = Correy_votes
-        elif Li_votes > winner_votes:
-            winner = "Li"
-            winner_votes = Li_votes
-        elif OTooley_votes > winner_votes:
-            winner = "O'Tooley"
-            winner_votes = OTooley_votes
+    avg_change = diff_total / (count -1)
 
-
-    # calculate the percentage of the vote for each candidate
-    Khan_percent = (Khan_votes / vote_count) * 100
-    Khan_percent = round(Khan_percent, 3)
-    Khan_percent = float(Khan_percent)
-
-    Correy_percent = (Correy_votes / vote_count) * 100
-    Correy_percent = round(Correy_percent, 3)
-    Correy_percent = float(Correy_percent)
-
-    Li_percent = (Li_votes / vote_count) * 100
-    Li_percent = round(Li_percent, 3)
-    Li_percent = float(Li_percent)
-
-    OTooley_percent = (OTooley_votes / vote_count) * 100
-    OTooley_percent = round(OTooley_percent, 3)
-    OTooley_percent = float(OTooley_percent)
-
-    # print results
-    print("Election Results")
-    print("--------------------------")    
-    print("Total Votes:" , vote_count)
+    print("Finnancial Analysis")
     print("--------------------------")
-    print("Khan:", Khan_percent,"% ", Khan_votes) 
-    print("Correy:", Correy_percent,"% ", Correy_votes)
-    print("Li:",Li_percent,"% ", Li_votes)
-    print("O'Tooley:",OTooley_percent,"% ", OTooley_votes)
-    print("--------------------------")
-    print("Winner:", winner)
-    print("--------------------------")
+    print("Total months:" , count)
+    print("Total:" , net_profit)
+    print("Average Change:", avg_change) 
+    print("Greatest Increase in Profits:", max_incr_mon, max_incr)
+    print("Greatest Decrease in Profits:", max_decr_mon, max_decr)
+  
+# create text for output 
+output = ["Finnancial Analysis", "--------------------------", "Total months:" , count]
+
+'''
+output_path = os.path.join("..", "Pybank", "new.txt")
+
+with open(output_path, 'w', newline='') as txtfile:
+
+    output_path.writelines(output)
+'''
